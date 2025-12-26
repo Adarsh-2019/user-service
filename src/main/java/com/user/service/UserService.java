@@ -6,6 +6,7 @@ import com.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +18,20 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User createUser(User user) {
+        // Ensure ID not set for create
+        user.setId(null);
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -51,7 +59,7 @@ public class UserService {
                     existing.setUpdatedAt(updated.getUpdatedAt());
                     existing.setCreatedAt(updated.getCreatedAt());
                     if (updated.getPassword() != null && !updated.getPassword().isBlank()) {
-                        existing.setPassword(updated.getPassword());
+                        existing.setPassword(passwordEncoder.encode(updated.getPassword()));
                     }
                     existing.setActive(updated.isActive());
                     return userRepository.save(existing);

@@ -2,3 +2,18 @@ spring:
   profiles:
     active:
       - local
+# properties
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when_authorized
+info:
+  app:
+    name: user-service Application
+    description: Spring Boot Actuator Demo
+    version: 1.0.0
+    owner: Angad Gond
