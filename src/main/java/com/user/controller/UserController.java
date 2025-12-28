@@ -73,4 +73,3 @@ public class UserController {
         return u.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }
-
