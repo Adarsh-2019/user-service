@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok).orElseThrow(()->new UserNotFoundException("User not found with id " + id));
+        return user.map(ResponseEntity::ok).orElseThrow(() -> new UserNotFoundException("User not found with id " + id));
     }
 
     @Operation(summary = "Get all users")
