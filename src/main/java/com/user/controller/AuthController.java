@@ -33,7 +33,10 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @Operation(summary = "Get user by ID")
+    @Operation(
+            summary = "User login",
+            description = "Authenticate user with email and password. Returns a JWT token for subsequent API calls."
+    )
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         try {
@@ -49,7 +52,10 @@ public class AuthController {
         }
     }
 
-    @Operation(summary = "Get user by ID")
+    @Operation(
+            summary = "User registration",
+            description = "Register a new user account. The user will be created and can then login to get a JWT token."
+    )
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) {
         User created = userService.createUser(user);

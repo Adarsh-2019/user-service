@@ -17,3 +17,17 @@ info:
     description: Spring Boot Actuator Demo
     version: 1.0.0
     owner: Angad Gond
+
+# Swagger/OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    doc-expansion: none
+    try-it-out-enabled: true
+  show-actuator: false
+  packages-to-scan: com.user.controller
+  paths-to-match: /api/**
